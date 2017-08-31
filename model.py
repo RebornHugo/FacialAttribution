@@ -1,5 +1,8 @@
 import tensorflow as tf
 from tensorflow.contrib.slim.python.slim.nets.inception_v3 import inception_v3_base
+from tensorflow.contrib.layers import *
+import os
+import re
 
 TOWER_NAME = 'tower'
 
@@ -10,7 +13,7 @@ def inception_v3(nlabels, images, pkeep, is_training):
         "trainable": True,
         "decay": 0.9997,
         "epsilon": 0.001,
-        "variable_collections": {
+        "variables_collections": {
             "beta": None,
             "gamma": None,
             "moving_mean": ["moving_vars"],
@@ -47,7 +50,7 @@ def inception_v3(nlabels, images, pkeep, is_training):
 
 
 def _activation_summary(x):
-    tensor_name = tf.re.sub('%s_[0-9]*/' % TOWER_NAME, '', x.op.name)
+    tensor_name = re.sub('%s_[0-9]*/' % TOWER_NAME, '', x.op.name)
     tf.summary.histogram(tensor_name + '/activations', x)
     tf.summary.scalar(tensor_name + '/sparsity', tf.nn.zero_fraction(x))
 

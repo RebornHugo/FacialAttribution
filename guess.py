@@ -8,8 +8,8 @@ import time
 # from data import inputs
 import numpy as np
 import tensorflow as tf
-from model import get_checkpoint
-# from utils import *
+from model import get_checkpoint, inception_v3
+from utils import *
 import os
 import json
 import csv
@@ -42,7 +42,7 @@ tf.app.flags.DEFINE_string('model_type', 'default',
 
 tf.app.flags.DEFINE_string('requested_step', '', 'Within the model directory, a requested step to restore e.g., 9000')
 
-tf.app.flags.DEFINE_string('face_detection_model', '', 'Do frontal face detection with model specified')
+# tf.app.flags.DEFINE_string('face_detection_model', '', 'Do frontal face detection with model specified')
 
 tf.app.flags.DEFINE_string('face_detection_type', 'cascade', 'Face detection model type (yolo_tiny|cascade)')
 
@@ -108,12 +108,12 @@ def main(argv=None):  # pylint: disable=unused-argument
 
     files = []
 
-    if FLAGS.face_detection_model:
-        print('Using face detector (%s) %s' % (FLAGS.face_detection_type, FLAGS.face_detection_model))
-        face_detect = face_detection_model(FLAGS.face_detection_type, FLAGS.face_detection_model)
-        face_files, rectangles = face_detect.run(FLAGS.filename)
-        print(face_files)
-        files += face_files
+    # if FLAGS.face_detection_model:
+    #     print('Using face detector (%s) %s' % (FLAGS.face_detection_type, FLAGS.face_detection_model))
+    #     face_detect = face_detection_model(FLAGS.face_detection_type, FLAGS.face_detection_model)
+    #     face_files, rectangles = face_detect.run(FLAGS.filename)
+    #     print(face_files)
+    #     files += face_files
 
     config = tf.ConfigProto(allow_soft_placement=True)
     with tf.Session(config=config) as sess:
@@ -122,7 +122,7 @@ def main(argv=None):  # pylint: disable=unused-argument
         nlabels = len(label_list)
 
         print('Executing on %s' % FLAGS.device_id)
-        model_fn = select_model(FLAGS.model_type)
+        model_fn = inception_v3
 
         with tf.device(FLAGS.device_id):
 
