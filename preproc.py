@@ -11,23 +11,26 @@ import threading
 import numpy as np
 import tensorflow as tf
 import json
+import pandas as pd
 
 RESIZE_HEIGHT = 256
 RESIZE_WIDTH = 256
 
+tf.app.flags.DEFINE_string('type_preproc', 'Smiling', 'Type of data preprocess')
+
 tf.app.flags.DEFINE_string('fold_dir',
-                           '',
+                           '/home/hugo/Coding/Data/Face/Sample/Anno/',
                            'Fold directory')
 
-tf.app.flags.DEFINE_string('data_dir', '/data/xdata/age-gender/aligned',
+tf.app.flags.DEFINE_string('data_dir', '/media/hugo/Acer/ubuntu_data/img_align_celeba_png/',
                            'Data directory')
 
-tf.app.flags.DEFINE_string('output_dir', '',
+tf.app.flags.DEFINE_string('output_dir', '/home/hugo/Coding/Data/Face/Sample/Output/',
                            'Output directory')
 
-tf.app.flags.DEFINE_string('train_list', 'age_train.txt',
+tf.app.flags.DEFINE_string('train_list', 'train.csv',
                            'Training list')
-tf.app.flags.DEFINE_string('valid_list', 'age_val.txt',
+tf.app.flags.DEFINE_string('valid_list', 'val.csv',
                            'Test list')
 
 tf.app.flags.DEFINE_integer('train_shards', 10,
@@ -115,7 +118,7 @@ def _is_png(filename):
     return '.png' in filename
 
 
-def _process_image(filename, coder) :
+def _process_image(filename, coder):
     """Process a single image file.
     Args:
     filename: string, path to an image file e.g., '/path/to/example.JPG'.
@@ -214,8 +217,8 @@ def _process_image_files(name, filenames, labels, num_shards):
     # Break all images into batches with a [ranges[i][0], ranges[i][1]].
     spacing = np.linspace(0, len(filenames), FLAGS.num_threads + 1).astype(np.int)
     ranges = []
-    for i in xrange(len(spacing) - 1):              # = num_threads = 2
-        ranges.append([spacing[i], spacing[i + 1]]) # [ [spacing[0], spacing[1]], [spacing[1], spacing[2]] ]
+    for i in xrange(len(spacing) - 1):  # = num_threads = 2
+        ranges.append([spacing[i], spacing[i + 1]])  # [ [spacing[0], spacing[1]], [spacing[1], spacing[2]] ]
 
     # Launch a thread for each batch.
     print('Launching %d threads for spacings: %s' % (FLAGS.num_threads, ranges))
@@ -242,9 +245,12 @@ def _process_image_files(name, filenames, labels, num_shards):
 
 def _find_image_files(list_file, data_dir):
     print('Determining list of input files and labels from %s.' % list_file)
-    files_labels = [l.strip().split(' ') for l in tf.gfile.FastGFile(
-        list_file, 'r').readlines()]
-
+    # files_labels = [l.strip().split(' ') for l in tf.gfile.FastGFile(
+    #     list_file, 'r').readlines()]
+    df = pd.read_csv('%s' % list_file, header=0)
+    file_name = list(df.loc[:, 'file_name'])
+    type_value = list(df.loc[:, FLAGS.type_preproc])
+    files_labels = list(zip(file_name, type_value))
     labels = []
     filenames = []
 
@@ -257,7 +263,7 @@ def _find_image_files(list_file, data_dir):
         if os.path.exists(jpeg_file_path):
             filenames.append(jpeg_file_path)
             labels.append(label)
-
+    print('len(filenames)=%s'%len(filenames))
     unique_labels = set(labels)
     # Shuffle the ordering of all image files in order to guarantee
     # random ordering of the images with respect to label in the
@@ -295,20 +301,21 @@ def main(unused_argv):
         'Please make the FLAGS.num_threads commensurate with '
         'FLAGS.valid_shards')
     print('Saving results to %s' % FLAGS.output_dir)
+    # df = pd.read_csv('%s/%s' % (FLAGS.fold_dir, FLAGS.train_list), delim_whitespace=True, header=0)
 
     if os.path.exists(FLAGS.output_dir) is False:
         print('creating %s' % FLAGS.output_dir)
         os.makedirs(FLAGS.output_dir)
 
     # Run it!
-    valid, valid_outcomes = _process_dataset('validation', '%s/%s' % (FLAGS.fold_dir, FLAGS.valid_list), FLAGS.data_dir,
+    valid, valid_outcomes = _process_dataset('validation', '%s%s' % (FLAGS.fold_dir, FLAGS.valid_list), FLAGS.data_dir,
                                              FLAGS.valid_shards)
-    train, train_outcomes = _process_dataset('train', '%s/%s' % (FLAGS.fold_dir, FLAGS.train_list), FLAGS.data_dir,
+    train, train_outcomes = _process_dataset('train', '%s%s' % (FLAGS.fold_dir, FLAGS.train_list), FLAGS.data_dir,
                                              FLAGS.train_shards)
 
     if len(valid_outcomes) != len(valid_outcomes | train_outcomes):
         print('Warning: unattested labels in training data [%s]' % (
-        ', '.join(valid_outcomes | train_outcomes) - valid_outcomes))
+            ', '.join(valid_outcomes | train_outcomes) - valid_outcomes))
 
     output_file = os.path.join(FLAGS.output_dir, 'md.json')
 
@@ -324,4 +331,3 @@ def main(unused_argv):
 
 if __name__ == '__main__':
     tf.app.run()
-
