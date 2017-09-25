@@ -33,12 +33,12 @@ tf.app.flags.DEFINE_string('train_list', 'train.csv',
 tf.app.flags.DEFINE_string('valid_list', 'val.csv',
                            'Test list')
 
-tf.app.flags.DEFINE_integer('train_shards', 10,
+tf.app.flags.DEFINE_integer('train_shards', 20,
                             'Number of shards in training TFRecord files.')
-tf.app.flags.DEFINE_integer('valid_shards', 2,
+tf.app.flags.DEFINE_integer('valid_shards', 4,
                             'Number of shards in validation TFRecord files.')
 
-tf.app.flags.DEFINE_integer('num_threads', 2,
+tf.app.flags.DEFINE_integer('num_threads', 4,
                             'Number of threads to preprocess the images.')
 
 FLAGS = tf.app.flags.FLAGS
