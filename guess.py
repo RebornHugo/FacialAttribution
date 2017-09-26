@@ -42,7 +42,7 @@ tf.app.flags.DEFINE_string('model_type', 'default',
 
 tf.app.flags.DEFINE_string('requested_step', '', 'Within the model directory, a requested step to restore e.g., 9000')
 
-# tf.app.flags.DEFINE_string('face_detection_model', '', 'Do frontal face detection with model specified')
+tf.app.flags.DEFINE_string('face_detection_model', '', 'Do frontal face detection with model specified')
 
 tf.app.flags.DEFINE_string('face_detection_type', 'cascade', 'Face detection model type (yolo_tiny|cascade)')
 
@@ -87,7 +87,9 @@ def classify_one_multi_crop(sess, label_list, softmax_output, coder, images, ima
             print('Guess @ 2 %s, prob = %.2f' % (label_list[second_best], output[second_best]))
 
         if writer is not None:
-            writer.writerow((image_file, best_choice[0], '%.2f' % best_choice[1]))
+            writer.writerow(image_file, best_choice[0], '%.2f' % best_choice[1])
+        print('%s' % best_choice[0])
+
     except Exception as e:
         print(e)
         print('Failed to run image %s ' % image_file)
@@ -108,12 +110,12 @@ def main(argv=None):  # pylint: disable=unused-argument
 
     files = []
 
-    # if FLAGS.face_detection_model:
-    #     print('Using face detector (%s) %s' % (FLAGS.face_detection_type, FLAGS.face_detection_model))
-    #     face_detect = face_detection_model(FLAGS.face_detection_type, FLAGS.face_detection_model)
-    #     face_files, rectangles = face_detect.run(FLAGS.filename)
-    #     print(face_files)
-    #     files += face_files
+    if FLAGS.face_detection_model:
+        print('Using face detector (%s) %s' % (FLAGS.face_detection_type, FLAGS.face_detection_model))
+        face_detect = face_detection_model(FLAGS.face_detection_type, FLAGS.face_detection_model)
+        face_files, rectangles = face_detect.run(FLAGS.filename)
+        print(face_files)
+        files += face_files
 
     config = tf.ConfigProto(allow_soft_placement=True)
     with tf.Session(config=config) as sess:

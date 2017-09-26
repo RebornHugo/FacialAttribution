@@ -20,8 +20,9 @@ class Ui_Widget(object):
         font.setFamily("楷体")
         font.setPointSize(12)
         self.pushButton_3.setFont(font)
-        self.pushButton_3.setStyleSheet("QPushButton { color: rgb(255, 255, 255);background-color: rgb(0, 0, 0); border-radius: 3px; } QPushButton:hover { color: rgb(0, 0, 0);background-color: rgb(255, 255, 255); }\n"
-"")
+        self.pushButton_3.setStyleSheet(
+            "QPushButton { color: rgb(255, 255, 255);background-color: rgb(0, 0, 0); border-radius: 3px; } QPushButton:hover { color: rgb(0, 0, 0);background-color: rgb(255, 255, 255); }\n"
+            "")
         self.pushButton_3.setObjectName("pushButton_3")
         self.label_9 = QtWidgets.QLabel(Widget)
         self.label_9.setGeometry(QtCore.QRect(690, 270, 101, 41))
@@ -97,8 +98,9 @@ class Ui_Widget(object):
         font.setFamily("楷体")
         font.setPointSize(12)
         self.pushButton_4.setFont(font)
-        self.pushButton_4.setStyleSheet("QPushButton { color: rgb(255, 255, 255);background-color: rgb(0, 0, 0); border-radius: 3px; } QPushButton:hover { color: rgb(0, 0, 0);background-color: rgb(255, 255, 255); }\n"
-"")
+        self.pushButton_4.setStyleSheet(
+            "QPushButton { color: rgb(255, 255, 255);background-color: rgb(0, 0, 0); border-radius: 3px; } QPushButton:hover { color: rgb(0, 0, 0);background-color: rgb(255, 255, 255); }\n"
+            "")
         self.pushButton_4.setObjectName("pushButton_4")
         self.textBrowser_2 = QtWidgets.QTextBrowser(Widget)
         self.textBrowser_2.setGeometry(QtCore.QRect(820, 90, 231, 51))
@@ -151,23 +153,32 @@ class Ui_Widget(object):
         self.pushButton_4.clicked.connect(self.testDialog)
 
         QtCore.QMetaObject.connectSlotsByName(Widget)
+
     def testDialog(self):
         #    app = QApplication(sys.argv)
         dialog = test.SelectDialog()
         dialog.exec_()
         if dialog.path is not test.path or None:
-                print(dialog.path)
-                self.label.setVisible(False)
-#                pic = QtGui.QPixmap()
-#                pic.load(dialog.path)
-                scene = QtWidgets.QGraphicsScene()
-                #        scene.setSceneRect(-600, -600, 1200, 1200)
-                pic = QtGui.QPixmap(dialog.path)
-                scene.addItem(QtWidgets.QGraphicsPixmapItem(pic))
-                view = self.graphicsView
-                view.setScene(scene)
-                view.setRenderHint(QtGui.QPainter.Antialiasing)
-                view.show()
+            print(dialog.path)
+            self.label.setVisible(False)
+            #                pic = QtGui.QPixmap()
+            #                pic.load(dialog.path)
+            scene = QtWidgets.QGraphicsScene()
+            #        scene.setSceneRect(-600, -600, 1200, 1200)
+            pic = QtGui.QPixmap(dialog.path)
+            scene.addItem(QtWidgets.QGraphicsPixmapItem(pic))
+            view = self.graphicsView
+            view.setScene(scene)
+            view.setRenderHint(QtGui.QPainter.Antialiasing)
+
+            view.show()
+
+            import os
+            res = os.popen(
+                'python guess.py --model_type inception --model_dir /home/hugo/Coding/WorkSpace/rude-carnie/Module/22801 '
+                '--filename %s --device_id /gpu:0' % dialog.path).readlines()
+            print(res[-1])
+            print(type(res[-1]))
         return
 
     def retranslateUi(self, Widget):
@@ -186,14 +197,12 @@ class Ui_Widget(object):
         self.label_4.setText(_translate("Widget", "是否带眼镜"))
 
 
-
-
 if __name__ == "__main__":
-        import sys
-        app = QtWidgets.QApplication(sys.argv)
-        Form = QtWidgets.QWidget()
-        ui = Ui_Widget()
-        ui.setupUi(Form)
-        Form.show()
-        sys.exit(app.exec_())
+    import sys
 
+    app = QtWidgets.QApplication(sys.argv)
+    Form = QtWidgets.QWidget()
+    ui = Ui_Widget()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())
