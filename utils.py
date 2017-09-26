@@ -9,6 +9,7 @@ import math
 import time
 import numpy as np
 import tensorflow as tf
+from detect import *
 import re
 
 RESIZE_AOI = 256
@@ -166,5 +167,5 @@ def make_multi_crop_batch(filename, coder):
 
 
 def face_detection_model(model_type, model_path):
-    model_type_lc = model_type.lower()
+    # model_type_lc = model_type.lower()
     return ObjectDetectorCascadeOpenCV(model_path)

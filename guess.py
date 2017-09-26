@@ -42,7 +42,8 @@ tf.app.flags.DEFINE_string('model_type', 'default',
 
 tf.app.flags.DEFINE_string('requested_step', '', 'Within the model directory, a requested step to restore e.g., 9000')
 
-tf.app.flags.DEFINE_string('face_detection_model', '', 'Do frontal face detection with model specified')
+tf.app.flags.DEFINE_string('face_detection_model', '',
+                           'Do frontal face detection with model specified')
 
 tf.app.flags.DEFINE_string('face_detection_type', 'cascade', 'Face detection model type (yolo_tiny|cascade)')
 

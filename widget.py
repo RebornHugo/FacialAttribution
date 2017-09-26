@@ -119,10 +119,10 @@ class Ui_Widget(object):
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
         self.graphicsView = QtWidgets.QGraphicsView(Widget)
-        self.graphicsView.setGeometry(QtCore.QRect(20, 60, 256, 241))
+        self.graphicsView.setGeometry(QtCore.QRect(20, 60, 256, 256))
         self.graphicsView.setObjectName("graphicsView")
         self.graphicsView_2 = QtWidgets.QGraphicsView(Widget)
-        self.graphicsView_2.setGeometry(QtCore.QRect(330, 60, 256, 241))
+        self.graphicsView_2.setGeometry(QtCore.QRect(330, 60, 256, 256))
         self.graphicsView_2.setObjectName("graphicsView_2")
         self.widget = QtWidgets.QWidget(Widget)
         self.widget.setGeometry(QtCore.QRect(10, 470, 71, 20))
@@ -174,11 +174,35 @@ class Ui_Widget(object):
             view.show()
 
             import os
-            res = os.popen(
-                'python guess.py --model_type inception --model_dir /home/hugo/Coding/WorkSpace/rude-carnie/Module/22801 '
-                '--filename %s --device_id /gpu:0' % dialog.path).readlines()
+            res = os.popen('python guess.py --model_type inception --model_dir '
+                           '/home/hugo/Coding/WorkSpace/rude-carnie/Module/22801 '
+                           '--filename %s --device_id /cpu:0' % dialog.path).readlines()
             print(res[-1])
             print(type(res[-1]))
+            self.textBrowser.setText(res[-1])
+
+            res = os.popen('python guess.py --class_type gender --model_type inception --model_dir '
+                           '/home/hugo/Coding/WorkSpace/rude-carnie/Module/21936 '
+                           '--filename %s --device_id /cpu:0  --face_detection_model '
+                           '/home/hugo/Coding/python/Anaconda/ENTER/envs/tf2/share/'
+                           'OpenCV/haarcascades/haarcascade_frontalface_default.xml '
+                           % dialog.path).readlines()
+            print(res[-1])
+            print(type(res[-1]))
+            self.textBrowser_3.setText(res[-1])
+
+            add = '/home/hugo/Coding/WorkSpace/FacialAttribution/frontal-face.jpg'
+            self.label_2.setVisible(False)
+            scene_2 = QtWidgets.QGraphicsScene()
+            #        scene.setSceneRect(-600, -600, 1200, 1200)
+            pic_2 = QtGui.QPixmap(add)
+            scene_2.addItem(QtWidgets.QGraphicsPixmapItem(pic_2))
+            view_2 = self.graphicsView_2
+            view_2.setScene(scene_2)
+            view_2.setRenderHint(QtGui.QPainter.Antialiasing)
+
+            view_2.show()
+
         return
 
     def retranslateUi(self, Widget):
