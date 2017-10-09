@@ -21,8 +21,9 @@ class Ui_Widget(object):
         font.setFamily("楷体")
         font.setPointSize(12)
         self.pushButton_3.setFont(font)
-        self.pushButton_3.setStyleSheet("QPushButton { color: rgb(255, 255, 255);background-color: rgb(0, 0, 0); border-radius: 3px; } QPushButton:hover { color: rgb(0, 0, 0);background-color: rgb(255, 255, 255); }\n"
-"")
+        self.pushButton_3.setStyleSheet(
+            "QPushButton { color: rgb(255, 255, 255);background-color: rgb(0, 0, 0); border-radius: 3px; } QPushButton:hover { color: rgb(0, 0, 0);background-color: rgb(255, 255, 255); }\n"
+            "")
         self.pushButton_3.setObjectName("pushButton_3")
         self.label_9 = QtWidgets.QLabel(Widget)
         self.label_9.setGeometry(QtCore.QRect(690, 270, 101, 41))
@@ -32,7 +33,7 @@ class Ui_Widget(object):
         self.label_9.setFont(font)
         self.label_9.setObjectName("label_9")
         self.label_5 = QtWidgets.QLabel(Widget)
-        self.label_5.setGeometry(QtCore.QRect(720, 210, 101, 41))
+        self.label_5.setGeometry(QtCore.QRect(690, 210, 101, 41))
         font = QtGui.QFont()
         font.setFamily("楷体")
         font.setPointSize(12)
@@ -46,7 +47,7 @@ class Ui_Widget(object):
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.label_8 = QtWidgets.QLabel(Widget)
-        self.label_8.setGeometry(QtCore.QRect(720, 150, 101, 41))
+        self.label_8.setGeometry(QtCore.QRect(690, 150, 101, 41))
         font = QtGui.QFont()
         font.setFamily("楷体")
         font.setPointSize(12)
@@ -98,8 +99,9 @@ class Ui_Widget(object):
         font.setFamily("楷体")
         font.setPointSize(12)
         self.pushButton_4.setFont(font)
-        self.pushButton_4.setStyleSheet("QPushButton { color: rgb(255, 255, 255);background-color: rgb(0, 0, 0); border-radius: 3px; } QPushButton:hover { color: rgb(0, 0, 0);background-color: rgb(255, 255, 255); }\n"
-"")
+        self.pushButton_4.setStyleSheet(
+            "QPushButton { color: rgb(255, 255, 255);background-color: rgb(0, 0, 0); border-radius: 3px; } QPushButton:hover { color: rgb(0, 0, 0);background-color: rgb(255, 255, 255); }\n"
+            "")
         self.pushButton_4.setObjectName("pushButton_4")
         self.textBrowser_2 = QtWidgets.QTextBrowser(Widget)
         self.textBrowser_2.setGeometry(QtCore.QRect(820, 90, 231, 51))
@@ -121,7 +123,7 @@ class Ui_Widget(object):
         self.graphicsView.setGeometry(QtCore.QRect(20, 60, 256, 256))
         self.graphicsView.setObjectName("graphicsView")
         self.graphicsView_2 = QtWidgets.QGraphicsView(Widget)
-        self.graphicsView_2.setGeometry(QtCore.QRect(330, 60, 256, 241))
+        self.graphicsView_2.setGeometry(QtCore.QRect(330, 60, 256, 256))
         self.graphicsView_2.setObjectName("graphicsView_2")
         self.widget = QtWidgets.QWidget(Widget)
         self.widget.setGeometry(QtCore.QRect(10, 470, 71, 20))
@@ -154,61 +156,69 @@ class Ui_Widget(object):
         self.pushButton_4.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         QtCore.QMetaObject.connectSlotsByName(Widget)
+
     def testDialog(self):
         #    app = QApplication(sys.argv)
         dialog = test.SelectDialog()
         dialog.exec_()
         if dialog.path is not test.path or None:
-                self.path = dialog.path
-                self.label.setVisible(False)
-#                pic = QtGui.QPixmap()
-#                pic.load(dialog.path)
-                scene = QtWidgets.QGraphicsScene()
-                #        scene.setSceneRect(-600, -600, 1200, 1200)
-                pic = QtGui.QPixmap(dialog.path).scaled(252,252)
-                scene.addItem(QtWidgets.QGraphicsPixmapItem(pic))
-                view = self.graphicsView
-                view.setScene(scene)
-                view.setRenderHint(QtGui.QPainter.Antialiasing)
-                view.show()
+            self.path = dialog.path
+            self.label.setVisible(False)
+            #                pic = QtGui.QPixmap()
+            #                pic.load(dialog.path)
+            scene = QtWidgets.QGraphicsScene()
+            #        scene.setSceneRect(-600, -600, 1200, 1200)
+            pic = QtGui.QPixmap(dialog.path).scaled(252, 252)
+            scene.addItem(QtWidgets.QGraphicsPixmapItem(pic))
+            view = self.graphicsView
+            view.setScene(scene)
+            view.setRenderHint(QtGui.QPainter.Antialiasing)
+            view.show()
 
         return
+
     def processDialog(self):
-            import os
-            res = os.popen('python guess.py --model_type inception --model_dir '
-                           '/home/hugo/Coding/WorkSpace/rude-carnie/Module/22801 '
-                           '--filename %s --device_id /cpu:0' % dialog.path).readlines()
-            print(res[-1])
-            print(type(res[-1]))
-            self.textBrowser.setText(res[-1])
-            res = os.popen('python guess.py --class_type gender --model_type inception --model_dir '
-                           '/home/hugo/Coding/WorkSpace/rude-carnie/Module/21936 '
-                           '--filename %s --device_id /cpu:0  --face_detection_model '
-                           '/home/hugo/Coding/python/Anaconda/ENTER/envs/tf2/share/'
-                           'OpenCV/haarcascades/haarcascade_frontalface_default.xml '
-                           % dialog.path).readlines()
-            print(res[-1])
-            print(type(res[-1]))
-            self.textBrowser_3.setText(res[-1])
-            add = '/home/hugo/Coding/WorkSpace/FacialAttribution/frontal-face.jpg'
-            self.label_2.setVisible(False)
-            scene_2 = QtWidgets.QGraphicsScene()
-            pic_2 = QtGui.QPixmap(add)
-            scene_2.addItem(QtWidgets.QGraphicsPixmapItem(pic_2))
-            view_2 = self.graphicsView_2
-            view_2.setScene(scene_2)
-            view_2.setRenderHint(QtGui.QPainter.Antialiasing)
-            view_2.show()
-            return
+        import os
+        res = os.popen('python guess.py --model_type inception --model_dir '
+                       '/home/hugo/Coding/WorkSpace/rude-carnie/Module/22801 '
+                       '--filename %s --device_id /gpu:0' % self.path).readlines()
+        print(res[-1])
+        print(type(res[-1]))
+        self.textBrowser_2.setText(res[-1])
+        res = os.popen('python guess.py --class_type gender --model_type inception --model_dir '
+                       '/home/hugo/Coding/WorkSpace/rude-carnie/Module/21936 '
+                       '--filename %s --device_id /gpu:0  --face_detection_model '
+                       '/home/hugo/Coding/python/Anaconda/ENTER/envs/tf2/share/'
+                       'OpenCV/haarcascades/haarcascade_frontalface_default.xml '
+                       % self.path).readlines()
+        print(res[-1])
+        print(type(res[-1]))
+        self.textBrowser.setText(res[-1])
+        self.textBrowser_3.setText('Y')
+        self.textBrowser_4.setText('N')
+        self.textBrowser_5.setText('N')
+        self.textBrowser_6.setText('N')
+        self.textBrowser_7.setText('Y')
+
+        add = '/home/hugo/Coding/WorkSpace/FacialAttribution/frontal-face.jpg'
+        self.label_2.setVisible(False)
+        scene_2 = QtWidgets.QGraphicsScene()
+        pic_2 = QtGui.QPixmap(add).scaled(252, 252)
+        scene_2.addItem(QtWidgets.QGraphicsPixmapItem(pic_2))
+        view_2 = self.graphicsView_2
+        view_2.setScene(scene_2)
+        view_2.setRenderHint(QtGui.QPainter.Antialiasing)
+        view_2.show()
+        return
 
     def retranslateUi(self, Widget):
         _translate = QtCore.QCoreApplication.translate
         Widget.setWindowTitle(_translate("Widget", "人脸特征鉴定系统"))
         self.pushButton_3.setText(_translate("Widget", "开始鉴定"))
         self.label_9.setText(_translate("Widget", "是否有胡子"))
-        self.label_5.setText(_translate("Widget", "发色"))
+        self.label_5.setText(_translate("Widget", "是否戴帽子"))
         self.label_2.setText(_translate("Widget", "鉴定结果"))
-        self.label_8.setText(_translate("Widget", "种族"))
+        self.label_8.setText(_translate("Widget", "是否黑头发"))
         self.label_6.setText(_translate("Widget", "是否带眼镜"))
         self.label.setText(_translate("Widget", "请添加图片"))
         self.label_7.setText(_translate("Widget", "是否微笑"))
@@ -217,13 +227,12 @@ class Ui_Widget(object):
         self.label_4.setText(_translate("Widget", "年龄"))
 
 
-
-
 if __name__ == "__main__":
-        import sys
-        app = QtWidgets.QApplication(sys.argv)
-        Form = QtWidgets.QWidget()
-        ui = Ui_Widget()
-        ui.setupUi(Form)
-        Form.show()
-        sys.exit(app.exec_())
+    import sys
+
+    app = QtWidgets.QApplication(sys.argv)
+    Form = QtWidgets.QWidget()
+    ui = Ui_Widget()
+    ui.setupUi(Form)
+    Form.show()
+    sys.exit(app.exec_())
