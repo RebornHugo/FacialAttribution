@@ -15,11 +15,11 @@ import re
 
 LAMBDA = 0.01
 MOM = 0.9
-tf.app.flags.DEFINE_string('pre_checkpoint_path', '',
+tf.app.flags.DEFINE_string('pre_checkpoint_path', '/home/xiaoxin/workspace/Module/smile/inception_v3.ckpt',
                            """If specified, restore this pretrained model """
                            """before beginning any training.""")
 
-tf.app.flags.DEFINE_string('train_dir', '/home/dpressel/dev/work/AgeGenderDeepLearning/Folds/tf/test_fold_is_0',
+tf.app.flags.DEFINE_string('train_dir', '/home/xiaoxin/workspace/Face/Sample/Output',
                            'Training directory')
 
 tf.app.flags.DEFINE_boolean('log_device_placement', False,
@@ -34,13 +34,13 @@ tf.app.flags.DEFINE_string('optim', 'Momentum',
 tf.app.flags.DEFINE_integer('image_size', 227,
                             'Image size')
 
-tf.app.flags.DEFINE_float('eta', 0.01,
+tf.app.flags.DEFINE_float('eta', 0.001,
                           'Learning rate')
 
-tf.app.flags.DEFINE_float('pdrop', 0.,
+tf.app.flags.DEFINE_float('pdrop', 0.5,
                           'Dropout probability')
 
-tf.app.flags.DEFINE_integer('max_steps', 40000,
+tf.app.flags.DEFINE_integer('max_steps', 15000,
                             'Number of iterations')
 
 tf.app.flags.DEFINE_integer('steps_per_decay', 10000,
@@ -51,7 +51,7 @@ tf.app.flags.DEFINE_float('eta_decay_rate', 0.1,
 tf.app.flags.DEFINE_integer('epochs', -1,
                             'Number of epochs')
 
-tf.app.flags.DEFINE_integer('batch_size', 128,
+tf.app.flags.DEFINE_integer('batch_size', 32,
                             'Batch size')
 
 tf.app.flags.DEFINE_string('checkpoint', 'checkpoint',

@@ -85,10 +85,10 @@ class Ui_Widget(object):
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
         self.textBrowser_4 = QtWidgets.QTextBrowser(Widget)
-        self.textBrowser_4.setGeometry(QtCore.QRect(820, 210, 231, 51))
+        self.textBrowser_4.setGeometry(QtCore.QRect(820, 180, 231, 61))
         self.textBrowser_4.setObjectName("textBrowser_4")
         self.textBrowser_6 = QtWidgets.QTextBrowser(Widget)
-        self.textBrowser_6.setGeometry(QtCore.QRect(820, 330, 231, 51))
+        self.textBrowser_6.setGeometry(QtCore.QRect(820, 300, 231, 61))
         self.textBrowser_6.setObjectName("textBrowser_6")
         self.textBrowser_5 = QtWidgets.QTextBrowser(Widget)
         self.textBrowser_5.setGeometry(QtCore.QRect(820, 270, 231, 51))
@@ -104,10 +104,10 @@ class Ui_Widget(object):
             "")
         self.pushButton_4.setObjectName("pushButton_4")
         self.textBrowser_2 = QtWidgets.QTextBrowser(Widget)
-        self.textBrowser_2.setGeometry(QtCore.QRect(820, 90, 231, 51))
+        self.textBrowser_2.setGeometry(QtCore.QRect(820, 90, 231, 53))
         self.textBrowser_2.setObjectName("textBrowser_2")
         self.textBrowser = QtWidgets.QTextBrowser(Widget)
-        self.textBrowser.setGeometry(QtCore.QRect(820, 30, 231, 51))
+        self.textBrowser.setGeometry(QtCore.QRect(820, 30, 231, 53))
         self.textBrowser.setObjectName("textBrowser")
         self.textBrowser_3 = QtWidgets.QTextBrowser(Widget)
         self.textBrowser_3.setGeometry(QtCore.QRect(820, 150, 231, 51))
@@ -180,16 +180,15 @@ class Ui_Widget(object):
     def processDialog(self):
         import os
         res = os.popen('python guess.py --model_type inception --model_dir '
-                       '/home/hugo/Coding/WorkSpace/rude-carnie/Module/22801 '
+                       '/home/xiaoxin/workspace/Module/22801 '
                        '--filename %s --device_id /gpu:0' % self.path).readlines()
         print(res[-1])
         print(type(res[-1]))
         self.textBrowser_2.setText(res[-1])
         res = os.popen('python guess.py --class_type gender --model_type inception --model_dir '
-                       '/home/hugo/Coding/WorkSpace/rude-carnie/Module/21936 '
+                       '/home/xiaoxin/workspace/Module/21936 '
                        '--filename %s --device_id /gpu:0  --face_detection_model '
-                       '/home/hugo/Coding/python/Anaconda/ENTER/envs/tf2/share/'
-                       'OpenCV/haarcascades/haarcascade_frontalface_default.xml '
+                       '/home/xiaoxin/anaconda3/envs/tensorflow/share/OpenCV/haarcascades/haarcascade_frontalface_default.xml '
                        % self.path).readlines()
         print(res[-1])
         print(type(res[-1]))
@@ -200,7 +199,7 @@ class Ui_Widget(object):
         self.textBrowser_6.setText('N')
         self.textBrowser_7.setText('Y')
 
-        add = '/home/hugo/Coding/WorkSpace/FacialAttribution/frontal-face.jpg'
+        add = '/home/xiaoxin/workspace/FacialAttribution/frontal-face.jpg'
         self.label_2.setVisible(False)
         scene_2 = QtWidgets.QGraphicsScene()
         pic_2 = QtGui.QPixmap(add).scaled(252, 252)

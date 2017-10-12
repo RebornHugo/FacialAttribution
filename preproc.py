@@ -19,13 +19,13 @@ RESIZE_WIDTH = 256
 tf.app.flags.DEFINE_string('type_preproc', 'Smiling', 'Type of data preprocess')
 
 tf.app.flags.DEFINE_string('fold_dir',
-                           '/home/hugo/Coding/Data/Face/Sample/Anno/',
+                           '/home/xiaoxin/workspace/Face/Sample/Anno/',
                            'Fold directory')
 
-tf.app.flags.DEFINE_string('data_dir', '/media/hugo/Acer/ubuntu_data/img_align_celeba_png/',
+tf.app.flags.DEFINE_string('data_dir', '/home/xiaoxin/workspace/img_align_celeba_png/img_align_celeba_png/',
                            'Data directory')
 
-tf.app.flags.DEFINE_string('output_dir', '/home/hugo/Coding/Data/Face/Sample/Output/',
+tf.app.flags.DEFINE_string('output_dir', '/home/xiaoxin/workspace/Face/Sample/Output/',
                            'Output directory')
 
 tf.app.flags.DEFINE_string('train_list', 'train.csv',
@@ -119,7 +119,7 @@ def _is_png(filename):
 
 
 def _process_image(filename, coder):
-    """Process a single image file.
+    """Process a single image file.d
     Args:
     filename: string, path to an image file e.g., '/path/to/example.JPG'.
     coder: instance of ImageCoder to provide TensorFlow image coding utils.
