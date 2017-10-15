@@ -185,6 +185,42 @@ class Ui_Widget(object):
         print(res[-1])
         print(type(res[-1]))
         self.textBrowser_2.setText(res[-1])
+
+        res = os.popen('python guess.py --model_type inception --class_type blackhair --model_dir '
+                       '/home/hugo/Coding/Data/Face/Module/Output_blackhair/run-19155 '
+                       '--filename %s --device_id /gpu:0' % self.path).readlines()
+        print(res[-1])
+        print(type(res[-1]))
+        self.textBrowser_3.setText(res[-1])
+
+        res = os.popen('python guess.py --model_type inception --class_type hat --model_dir '
+                       '/home/hugo/Coding/Data/Face/Module/Output_hat/run-4685 '
+                       '--filename %s --device_id /gpu:0' % self.path).readlines()
+        print(res[-1])
+        print(type(res[-1]))
+        self.textBrowser_4.setText(res[-1])
+
+        res = os.popen('python guess.py --model_type inception --class_type mustache --model_dir '
+                       '/home/hugo/Coding/Data/Face/Module/Output_mustache/run-15071 '
+                       '--filename %s --device_id /gpu:0' % self.path).readlines()
+        print(res[-1])
+        print(type(res[-1]))
+        self.textBrowser_5.setText(res[-1])
+
+        res = os.popen('python guess.py --model_type inception --class_type eyeglass --model_dir '
+                       '/home/hugo/Coding/Data/Face/Module/Output_eyeglass/run-25919 '
+                       '--filename %s --device_id /gpu:0' % self.path).readlines()
+        print(res[-1])
+        print(type(res[-1]))
+        self.textBrowser_6.setText(res[-1])
+
+        res = os.popen('python guess.py --model_type inception --class_type smile --model_dir '
+                       '/home/hugo/Coding/Data/Face/Module/Output_smile/run-15985 '
+                       '--filename %s --device_id /gpu:0' % self.path).readlines()
+        print(res[-1])
+        print(type(res[-1]))
+        self.textBrowser_7.setText(res[-1])
+
         res = os.popen('python guess.py --class_type gender --model_type inception --model_dir '
                        '/home/hugo/Coding/Data/Face/Module/Output_gender/21936 '
                        '--filename %s --device_id /gpu:0  --face_detection_model '
@@ -194,11 +230,6 @@ class Ui_Widget(object):
         print(res[-1])
         print(type(res[-1]))
         self.textBrowser.setText(res[-1])
-        self.textBrowser_3.setText('Y')
-        self.textBrowser_4.setText('N')
-        self.textBrowser_5.setText('N')
-        self.textBrowser_6.setText('N')
-        self.textBrowser_7.setText('Y')
 
         add = '/home/hugo/Coding/WorkSpace/FacialAttribution/frontal-face.jpg'
         self.label_2.setVisible(False)
