@@ -11,7 +11,6 @@ from distutils.version import LooseVersion
 
 VERSION_GTE_0_12_0 = LooseVersion(tf.__version__) >= LooseVersion('0.12.0')
 
-# Name change in TF v 0.12.0
 if VERSION_GTE_0_12_0:
     standardize_image = tf.image.per_image_standardization
 else:
@@ -40,23 +39,10 @@ def data_files(data_dir, subset):
 
 
 def decode_jpeg(image_buffer, scope=None):
-    """Decode a JPEG string into one 3-D float image Tensor.
-    Args:
-      image_buffer: scalar string Tensor.
-      scope: Optional scope for op_scope.
-    Returns:
-      3-D float Tensor with values ranging from [0, 1).
-    """
     with tf.op_scope([image_buffer], scope, 'decode_jpeg'):
         # Decode the string as an RGB JPEG.
-        # Note that the resulting image contains an unknown height and width
-        # that is set dynamically by decode_jpeg. In other words, the height
-        # and width of image is unknown at compile-time.
         image = tf.image.decode_jpeg(image_buffer, channels=3)
 
-        # After this point, all image pixels reside in [0,1)
-        # until the very end, when they're rescaled to (-1, 1).  The various
-        # adjust_* ops all require this range for dtype float.
         image = tf.image.convert_image_dtype(image, dtype=tf.float32)
         return image
 
@@ -67,13 +53,8 @@ def distort_image(image, height, width):
 
     distorted_image = tf.random_crop(image, [height, width, 3])
 
-    # distorted_image = tf.image.resize_images(image, [height, width])
-
     # Randomly flip the image horizontally.
     distorted_image = tf.image.random_flip_left_right(distorted_image)
-
-    # Because these operations are not commutative, consider randomizing
-    # the order their operation.
 
     distorted_image = tf.image.random_brightness(distorted_image,
                                                  max_delta=63)
@@ -99,16 +80,7 @@ def data_normalization(image):
 
 
 def image_preprocessing(image_buffer, image_size, train, thread_id=0):
-    """Decode and preprocess one image for evaluation or training.
-    Args:
-    image_buffer: JPEG encoded string Tensor
-    train: boolean
-    thread_id: integer indicating preprocessing thread
-    Returns:
-    3-D float Tensor containing an appropriately scaled image
-    Raises:
-    ValueError: if user does not provide bounding box
-    """
+
 
     image = decode_jpeg(image_buffer)
 

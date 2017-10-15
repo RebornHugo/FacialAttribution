@@ -57,16 +57,6 @@ def _bytes_feature(value):
 
 
 def _convert_to_example(filename, image_buffer, label, height, width):
-    """Build an Example proto for an example.
-    Args:
-    filename: string, path to an image file, e.g., '/path/to/example.JPG'
-    image_buffer: string, JPEG encoding of RGB image
-    label: integer, identifier for the ground truth for the network
-    height: integer, image height in pixels
-    width: integer, image width in pixels
-    Returns:
-    Example proto
-    """
 
     example = tf.train.Example(features=tf.train.Features(feature={
         'image/class/label': _int64_feature(label),
@@ -109,12 +99,6 @@ class ImageCoder(object):
 
 
 def _is_png(filename):
-    """Determine if a file contains a PNG format image.
-    Args:
-    filename: string, path of the image file.
-    Returns:
-    boolean indicating if the image is a PNG.
-    """
     return '.png' in filename
 
 
@@ -144,17 +128,6 @@ def _process_image(filename, coder):
 
 def _process_image_files_batch(coder, thread_index, ranges, name, filenames,
                                labels, num_shards):
-    """Processes and saves list of images as TFRecord in 1 thread.
-    Args:
-    coder: instance of ImageCoder to provide TensorFlow image coding utils.
-    thread_index: integer, unique batch to run index is within [0, len(ranges)).
-    ranges: list of pairs of integers specifying ranges of each batches to
-    analyze in parallel.
-    name: string, unique identifier specifying the data set
-    filenames: list of strings; each string is a path to an image file
-    labels: list of integer; each integer identifies the ground truth
-    num_shards: integer number of shards for this data set.
-    """
     # Each thread produces N shards where N = int(num_shards / num_threads).
     # For instance, if num_shards = 128, and the num_threads = 2, then the first
     # thread would produce shards [0, 64).
@@ -205,13 +178,6 @@ def _process_image_files_batch(coder, thread_index, ranges, name, filenames,
 
 
 def _process_image_files(name, filenames, labels, num_shards):
-    """Process and save list of images as TFRecord of Example protos.
-    Args:
-    name: string, unique identifier specifying the data set
-    filenames: list of strings; each string is a path to an image file
-    labels: list of integer; each integer identifies the ground truth
-    num_shards: integer number of shards for this data set.
-    """
     assert len(filenames) == len(labels), "filenames' number are unequal to labels'"
 
     # Break all images into batches with a [ranges[i][0], ranges[i][1]].

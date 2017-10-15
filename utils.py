@@ -17,8 +17,6 @@ RESIZE_FINAL = 227
 standardize_image = tf.image.per_image_standardization
 
 
-# Modifed from here
-# http://stackoverflow.com/questions/3160699/python-progress-bar#3160819
 class ProgressBar(object):
     DEFAULT = 'Progress: %(bar)s %(percent)3d%%'
     FULL = '%(bar)s %(current)d/%(total)d (%(percent)3d%%) %(remaining)d to go'
@@ -87,24 +85,10 @@ class ImageCoder(object):
 
 
 def _is_png(filename):
-    """Determine if a file contains a PNG format image.
-    Args:
-    filename: string, path of the image file.
-    Returns:
-    boolean indicating if the image is a PNG.
-    """
     return '.png' in filename
 
 
 def make_multi_image_batch(filenames, coder):
-    """Process a multi-image batch, each with a single-look
-    Args:
-    filenames: list of paths
-    coder: instance of ImageCoder to provide TensorFlow image coding utils.
-    Returns:
-    image_buffer: string, JPEG encoding of RGB image.
-    """
-
     images = []
 
     for filename in filenames:
@@ -125,13 +109,6 @@ def make_multi_image_batch(filenames, coder):
 
 
 def make_multi_crop_batch(filename, coder):
-    """Process a single image file.
-    Args:
-    filename: string, path to an image file e.g., '/path/to/example.JPG'.
-    coder: instance of ImageCoder to provide TensorFlow image coding utils.
-    Returns:
-    image_buffer: string, JPEG encoding of RGB image.
-    """
     # Read the image file.
     with tf.gfile.FastGFile(filename, 'rb') as f:
         image_data = f.read()
