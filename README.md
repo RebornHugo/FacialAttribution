@@ -2,7 +2,7 @@ FacialAttribution Analysis:  Deep Learning with TensorFlow
 ============================================================
 
 ## Goal
-Extract facial attribution and analysis by convolution nerual network.
+Identity facial attribution by convolution neural network.
 
 ## Core Module
 Fine tune Inception V3 module
@@ -30,9 +30,11 @@ provided by **Prof.Zhang**
 3. Resample all images into jpeg type
 
 ## Training
-1. Base on [Inception-V3](https://arxiv.org/abs/1512.00567), using a module (tensorflow.contrib.slim), which provide the interface
+1. Based on [Inception-V3](https://arxiv.org/abs/1512.00567), using a module (tensorflow.contrib.slim), which provide the interface
 
-2. * default optimizer: Momentum
+2. ​
+
+   * default optimizer: Momentum
 
 
    * default batch size: 32
@@ -50,7 +52,7 @@ provided by **Prof.Zhang**
 
 1. Using pyqt5 module
 
-2. Tow file widget.py and test.py.  Run widget.py, click 图片位置， choose a image and click 开始鉴定. And the result will be look like this: 
+2. Two file widget.py and test.py.  Run widget.py, click 图片位置， choose a image and click 开始鉴定. And the result will be look like this: 
 
    ![demo1](./demo/demo1.png)
 
@@ -61,4 +63,5 @@ provided by **Prof.Zhang**
 ## Acknowledge
 
 1. **Prof.Zhang**, Our adviser. 
-2. Multimedia Lab, The Chinese University of Hong Kong, which provided the training data.
+2. Multimedia Lab, The Chinese University of Hong Kong, which provided the [dataset](http://personal.ie.cuhk.edu.hk/~lz013/projects/CelebA.html).
+
