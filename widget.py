@@ -180,13 +180,13 @@ class Ui_Widget(object):
     def processDialog(self):
         import os
         res = os.popen('python guess.py --model_type inception --model_dir '
-                       '/home/hugo/Coding/WorkSpace/rude-carnie/Module/22801 '
+                       '/home/hugo/Coding/Data/Face/Module/Output_age/22801 '
                        '--filename %s --device_id /gpu:0' % self.path).readlines()
         print(res[-1])
         print(type(res[-1]))
         self.textBrowser_2.setText(res[-1])
         res = os.popen('python guess.py --class_type gender --model_type inception --model_dir '
-                       '/home/hugo/Coding/WorkSpace/rude-carnie/Module/21936 '
+                       '/home/hugo/Coding/Data/Face/Module/Output_gender/21936 '
                        '--filename %s --device_id /gpu:0  --face_detection_model '
                        '/home/hugo/Coding/python/Anaconda/ENTER/envs/tf2/share/'
                        'OpenCV/haarcascades/haarcascade_frontalface_default.xml '
