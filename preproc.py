@@ -16,16 +16,15 @@ import pandas as pd
 RESIZE_HEIGHT = 256
 RESIZE_WIDTH = 256
 
-tf.app.flags.DEFINE_string('type_preproc', 'Smiling', 'Type of data preprocess')
-
+tf.app.flags.DEFINE_string('type_preproc', 'Mustache', 'Type of data preprocess')
 tf.app.flags.DEFINE_string('fold_dir',
-                           '/home/xiaoxin/workspace/Face/Sample/Anno/',
+                           '/home/xiaoxin/workspace/Face2/Sample/Anno/',
                            'Fold directory')
 
 tf.app.flags.DEFINE_string('data_dir', '/home/xiaoxin/workspace/img_align_celeba_png/img_align_celeba_png/',
                            'Data directory')
 
-tf.app.flags.DEFINE_string('output_dir', '/home/xiaoxin/workspace/Face/Sample/Output/',
+tf.app.flags.DEFINE_string('output_dir', '/home/xiaoxin/workspace/Face2/Sample/Output_musctache/',
                            'Output directory')
 
 tf.app.flags.DEFINE_string('train_list', 'train.csv',
@@ -33,12 +32,12 @@ tf.app.flags.DEFINE_string('train_list', 'train.csv',
 tf.app.flags.DEFINE_string('valid_list', 'val.csv',
                            'Test list')
 
-tf.app.flags.DEFINE_integer('train_shards', 20,
+tf.app.flags.DEFINE_integer('train_shards', 24,
                             'Number of shards in training TFRecord files.')
-tf.app.flags.DEFINE_integer('valid_shards', 4,
+tf.app.flags.DEFINE_integer('valid_shards', 8,
                             'Number of shards in validation TFRecord files.')
 
-tf.app.flags.DEFINE_integer('num_threads', 4,
+tf.app.flags.DEFINE_integer('num_threads', 8,
                             'Number of threads to preprocess the images.')
 
 FLAGS = tf.app.flags.FLAGS

@@ -15,17 +15,17 @@ import re
 
 LAMBDA = 0.01
 MOM = 0.9
-tf.app.flags.DEFINE_string('pre_checkpoint_path', '/home/xiaoxin/workspace/Module/smile/inception_v3.ckpt',
+tf.app.flags.DEFINE_string('pre_checkpoint_path', '',
                            """If specified, restore this pretrained model """
                            """before beginning any training.""")
 
-tf.app.flags.DEFINE_string('train_dir', '/home/xiaoxin/workspace/Face/Sample/Output',
+tf.app.flags.DEFINE_string('train_dir', '/home/xiaoxin/workspace/Face2/Sample/Output_musctache',
                            'Training directory')
 
 tf.app.flags.DEFINE_boolean('log_device_placement', False,
                             """Whether to log device placement.""")
 
-tf.app.flags.DEFINE_integer('num_preprocess_threads', 4,
+tf.app.flags.DEFINE_integer('num_preprocess_threads', 8,
                             'Number of preprocessing threads')
 
 tf.app.flags.DEFINE_string('optim', 'Momentum',
@@ -40,7 +40,7 @@ tf.app.flags.DEFINE_float('eta', 0.001,
 tf.app.flags.DEFINE_float('pdrop', 0.5,
                           'Dropout probability')
 
-tf.app.flags.DEFINE_integer('max_steps', 15000,
+tf.app.flags.DEFINE_integer('max_steps', 11000,
                             'Number of iterations')
 
 tf.app.flags.DEFINE_integer('steps_per_decay', 10000,
@@ -57,11 +57,11 @@ tf.app.flags.DEFINE_integer('batch_size', 32,
 tf.app.flags.DEFINE_string('checkpoint', 'checkpoint',
                            'Checkpoint name')
 
-tf.app.flags.DEFINE_string('model_type', 'default',
+tf.app.flags.DEFINE_string('model_type', 'inception',
                            'Type of convnet')
 
 tf.app.flags.DEFINE_string('pre_model',
-                           '',  # './inception_v3.ckpt',
+                           '/home/xiaoxin/workspace/Module/smile/inception_v3.ckpt',  # './inception_v3.ckpt',
                            'checkpoint file')
 FLAGS = tf.app.flags.FLAGS
 
@@ -110,6 +110,7 @@ def loss(logits, labels):
     with tf.control_dependencies([loss_averages_op]):
         total_loss = tf.identity(total_loss)
     return total_loss
+    # return cross_entropy
 
 
 def main(argv=None):
@@ -171,7 +172,6 @@ def main(argv=None):
             start_time = time.time()
             _, loss_value = sess.run([train_op, total_loss])
             duration = time.time() - start_time
-
             assert not np.isnan(loss_value), 'Model diverged with loss = NaN'
 
             if step % 10 == 0:

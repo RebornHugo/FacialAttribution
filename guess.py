@@ -17,6 +17,11 @@ import csv
 RESIZE_FINAL = 227
 GENDER_LIST = ['M', 'F']
 AGE_LIST = ['(0, 2)', '(4, 6)', '(8, 12)', '(15, 20)', '(25, 32)', '(38, 43)', '(48, 53)', '(60, 100)']
+SMILE_LIST = ['Not Smiling', 'Smiling']
+EYEGLASS_LIST = ['Not Wear', 'Wear']
+BLACKHAIR_LIST = ['False', 'True']
+MUSTACHE_LIST = ['False', 'True']
+HAT_LIST= ['Not Wear', 'Wear']
 MAX_BATCH_SZ = 128
 
 tf.app.flags.DEFINE_string('model_dir', '',
@@ -36,9 +41,6 @@ tf.app.flags.DEFINE_string('target', '',
 
 tf.app.flags.DEFINE_string('checkpoint', 'checkpoint',
                            'Checkpoint basename')
-
-tf.app.flags.DEFINE_string('model_type', 'default',
-                           'Type of convnet')
 
 tf.app.flags.DEFINE_string('requested_step', '', 'Within the model directory, a requested step to restore e.g., 9000')
 
@@ -120,8 +122,18 @@ def main(argv=None):  # pylint: disable=unused-argument
 
     config = tf.ConfigProto(allow_soft_placement=True)
     with tf.Session(config=config) as sess:
-
-        label_list = AGE_LIST if FLAGS.class_type == 'age' else GENDER_LIST
+        def f(x):
+            return {
+                'age': AGE_LIST,
+                'smile': SMILE_LIST,
+                'gender': GENDER_LIST,
+                'hat': HAT_LIST,
+                'eyeglass': EYEGLASS_LIST,
+                'blackhair': BLACKHAIR_LIST,
+                'mustache': MUSTACHE_LIST
+            }.get(x, 'age')
+        # label_list = AGE_LIST if FLAGS.class_type == 'age' else GENDER_LIST
+        label_list = f(FLAGS.class_type)
         nlabels = len(label_list)
 
         print('Executing on %s' % FLAGS.device_id)
