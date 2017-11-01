@@ -66,4 +66,4 @@ provided by **Prof.Zhang**
 ## Acknowledge
 
 1. **Prof.Zhang**, Our adviser. 
-2. Multimedia Lab, The Chinese University of Hong Kong, which provided the [dataset](http://personal.ie.cuhk.edu.hk/~lz013/projects/CelebA.html).
+2. Multimedia Lab, The Chinese University of Hong Kong, which provided the [dataset](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html).
